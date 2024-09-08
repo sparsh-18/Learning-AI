@@ -1,0 +1,5 @@
+Pipfile
+Pipfile.lock
+.env
+facts-chat-chroma
+__pycache__

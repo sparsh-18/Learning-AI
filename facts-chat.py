@@ -21,7 +21,7 @@ docs = loader.load_and_split(text_splitter)
 # print(docs)
 
 huggin_face_embeddings = HuggingFaceEmbeddings(
-    model_name='sentence-transformers/all-MiniLM-l6-v2'
+    model_name='sentence-transformers/all-MiniLM-l6-v2' # It maps sentences & paragraphs to a 384 dimensional dense vector space
 )
 
 # the function takes a doc from list of docs, embed them and store them in the directory in sqlite format

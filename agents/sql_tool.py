@@ -42,6 +42,13 @@ def describe_tables(table_names) -> str:
     rows = cursor.execute(query)
     return '\n'.join(row[0] for row in rows if row[0] is not None)
 
+@tool
+def write_html_report(file_name: str, html_content: str):
+    '''Write the html content to a file.'''
+    print('\n****** write_html_report Function called with:', file_name, '******\n')
+    with open(file_name, 'w') as f:
+        f.write(html_content)
+
 # print(run_sqlite_query('SELECT * FROM users'))
 
 # Tool.from_function is not working properly with registering tools using the bind_tools method 

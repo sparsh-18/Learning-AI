@@ -5,7 +5,7 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
 from langchain.schema import SystemMessage
 # from sql_tool import run_query_tool, list_tables, describe_tables_tool, list_tables_tool
-from sql_tool import list_tables, run_sqlite_query, describe_tables
+from sql_tool import list_tables, run_sqlite_query, describe_tables, write_html_report
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, StateGraph, MessagesState
 from langgraph.prebuilt import ToolNode
@@ -31,7 +31,7 @@ prompt_template = ChatPromptTemplate(
     ]
 )
 
-tools = [list_tables, run_sqlite_query, describe_tables]
+tools = [list_tables, run_sqlite_query, describe_tables, write_html_report]
 tool_node = ToolNode(tools)
 
 c = chat_llm.bind_tools(tools)
@@ -107,7 +107,7 @@ def getPrompt(input):
 # inputPrompt = "Which is the most trendy product and give me a list of users who have bought it?"
 # ans - The most trendy product is Soap.
 
-inputPrompt = "Which is the most trendy product and provide a list of name of users who have ordered it?"
+# inputPrompt = "Which is the most trendy product and provide a list of name of users who have ordered it?"
 # It used the order_products table to find the most trendy product
 # ans - The list of users who have ordered the most trendy product "Soap" is:
 # 1. Lauren Perry
@@ -222,6 +222,10 @@ inputPrompt = "Which is the most trendy product and provide a list of name of us
 
 # 3rd run it used order_products table again to find the most trendy product
 
+
+# inputPrompt = "Write an HTML report on the most ordered product." # report.html
+inputPrompt = "Write an HTML guide describing the db also helping user write queries." # db_guide.html
+
 final_state = app.invoke(
     input={'messages': getPrompt(inputPrompt)},
     config={"configurable": {"thread_id": 42}}
@@ -241,3 +245,5 @@ tool_calls = [
 
 for call in tool_calls:
     print('\n',call)
+
+print('\n*************execution completed*************\n')
